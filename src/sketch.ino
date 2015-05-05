@@ -19,9 +19,7 @@ int mNum[10][SEGMENT_MAX] = {
 };
 
 void setup() {
-    // init pin
     for (int i=SEGMENT_A; i<SEGMENT_MAX; i++) { pinMode(i+PIN_OFFSET, OUTPUT); }
-    Serial.begin(9600);
 }
 
 void loop() {
