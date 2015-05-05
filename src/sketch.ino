@@ -1,27 +1,10 @@
 // 5161as
 // 8LED数字表示モジュール
+#define SEGMENT_A 0
+#define SEGMENT_MAX 8
+#define PIN_OFFSET 2
 
-enum {
-    SEGMENT_A = 2,
-    SEGMENT_B,
-    SEGMENT_C,
-    SEGMENT_D,
-    SEGMENT_E,
-    SEGMENT_F,
-    SEGMENT_G,
-    SEGMENT_DP,
-    SEGMENT_MAX,
-};
-
-#define NUM_OFFSET 2
-
-void setup() {
-    // init pin
-    for (int i=SEGMENT_A; i<SEGMENT_MAX; i++) { pinMode(i, OUTPUT); }
-    Serial.begin(9600);
-}
-
-int mNum[10][SEGMENT_MAX-NUM_OFFSET] = {
+int mNum[10][SEGMENT_MAX] = {
 //   A,B,C,D,E,F,G,H(DP)
     {1,1,1,1,1,1,0,0},  // 0
     {0,1,1,0,0,0,0,0},  // 1
@@ -35,9 +18,15 @@ int mNum[10][SEGMENT_MAX-NUM_OFFSET] = {
     {1,1,1,1,0,1,1,0},  // 9
 };
 
+void setup() {
+    // init pin
+    for (int i=SEGMENT_A; i<SEGMENT_MAX; i++) { pinMode(i+PIN_OFFSET, OUTPUT); }
+    Serial.begin(9600);
+}
+
 void loop() {
     for (int j=0; j<10; j++) {
-        for (int i=SEGMENT_A; i<SEGMENT_MAX; i++) { digitalWrite(i,mNum[j][i-NUM_OFFSET] ); }
+        for (int i=SEGMENT_A; i<SEGMENT_MAX; i++) { digitalWrite((i+PIN_OFFSET),mNum[j][i] ); }
         delay(200);
     }
 }
